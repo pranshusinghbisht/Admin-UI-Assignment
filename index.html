@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin UI</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+
+</head>
+<style>
+ table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+thead th {
+  background-color: #f2f2f2;
+  border: 1px solid #ddd;
+  font-weight: bold;
+  text-align: left;
+  padding: 8px;
+}
+
+thead th:first-child {
+  width: 20px;
+}
+
+thead th:last-child,
+tbody td:last-child {
+  text-align: center;
+  width: 80px;
+}
+
+tbody td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+tbody td:first-child {
+  text-align: center;
+}
+
+tbody td:last-child span {
+  margin: 0 4px;
+  cursor: pointer;
+}
+
+tbody td:last-child span:first-child {
+  color: #007bff;
+}
+
+tbody td:last-child span:last-child {
+  color: #dc3545;
+}
+
+</style>
+
+<body>
+
+    <header>
+        <input type="text" placeholder="Seach by name, email, or role">
+    </header>
+
+    <main>
+        <table>
+            <thead>
+              <tr>
+                <th><input type="checkbox" id="selectAll"></th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="container">
+              <!-- Table rows with data will go here -->
+              <tr>
+                <td><input type="checkbox"></td>
+                <td>John Doe</td>
+                <td>johndoe@example.com</td>
+                <td>Admin</td>
+                <td>
+                  <span><i class="fas fa-edit"></i></span>
+                  <span><i class="fas fa-trash-alt"></i></span>
+                </td>
+              </tr>
+
+
+
+
+
+              <tr>
+                <td><input type="checkbox"></td>
+                <td>Jane Smith</td>
+                <td>janesmith@example.com</td>
+                <td>Member</td>
+                <td>
+                  <span><i class="fas fa-edit"></i></span>
+                  <span><i class="fas fa-trash-alt"></i></span>
+                </td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+    </main>
+
+    <footer>
+
+        <div class="pagination">
+            <button class="pagination-btn first-page-btn" disabled>First Page</button>
+            <button class="pagination-btn prev-page-btn" disabled>Prev</button>
+            <span class="pagination-page-numbers">3</span>
+            <button class="pagination-btn next-page-btn" disabled>Next</button>
+            <button class="pagination-btn last-page-btn" disabled>Last Page</button>
+
+
+          </div>
+          
+
+    </footer>
+    
+</body>
+
+<style>
+    .pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.pagination-btn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.pagination-btn:hover {
+  background-color: #3e8e41;
+}
+
+.pagination-btn:disabled {
+  background-color: #bfbfbf;
+  color: #666;
+  cursor: not-allowed;
+}
+
+.pagination-page-numbers {
+  margin: 0 10px;
+}
+
+.pagination-page-numbers span {
+  margin-right: 5px;
+}
+
+.pagination-page-numbers .current-page {
+  font-weight: bold;
+}
+
+</style>
+</html>
+
+<script src="./index.js"></script>
