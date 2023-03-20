@@ -1,19 +1,11 @@
 let url =  "https://geektrust.s3-ap-southeast-1.amazonaws.com/adminui-problem/members.json";
 
-let dataLength = 0;
-fetch(url).then((res)=> {
-    return (res.json());
-  }).then((data) => {
-    // console.log(data.articles);
-    dataLength = data.length;
-}).catch(function(err){
-    console.log(err);
-})
-console.log(dataLength);
 ////////////////////////////////////////////////////
+////////////////Pagination//////////////////////////
 
 
-let currentPageNum = 0;
+
+var currentPageNum = 0;
 
 
   let data = [];
@@ -28,12 +20,10 @@ let main = async () => {
   
 
    renderDom(currentPageNum)
-   // console.log(data[0])
+   dataLength(data.length);
   }
 
   main();
-
-
 
   let renderDom = (index) => {
    let cont = document.getElementById("container");
@@ -45,7 +35,7 @@ let main = async () => {
    let end = start + 10;
 
    let per_page_data = data.slice(start,end);
-    dataLength = data.length;
+    // dataLength = data.length;
 
    per_page_data.forEach(({name, email, role}) => {
 
@@ -65,17 +55,33 @@ container.append(tr);
   document.getElementById("page-buttons").innerText = index+1;
   };
 
-  
+  let dataLength = (totalData) => {
+    console.log(Math.ceil(totalData/10));
   //next page
   document.getElementById("next-button").addEventListener("click", () => {
+
+   
+    if(currentPageNum == Math.ceil(totalData/10)-1){
+      currentPageNum = 0;
+      renderDom(currentPageNum);
+    }else{
     currentPageNum++;
+    console.log(currentPageNum);
     renderDom(currentPageNum);
+    }
   })
 
   //previous page
   document.getElementById("previous-button").addEventListener("click", () => {
-    currentPageNum--;
-    renderDom(currentPageNum);
+
+    if(currentPageNum == 0){
+      currentPageNum = Math.ceil(totalData/10)-1;
+      renderDom(currentPageNum);
+    }else{
+
+      currentPageNum--;
+      renderDom(currentPageNum);
+    }
   })
 
   //first page
@@ -83,24 +89,13 @@ container.append(tr);
     currentPageNum = 0;
     renderDom(currentPageNum);
   })
+  
+  //last page
+  document.getElementById("last-button").addEventListener("click", () => {
+    currentPageNum = Math.ceil(totalData/10)-1;
+    renderDom(currentPageNum);
+  })
 
-//   let showButtons = (pageNo) => {
-//    let btn = document.getElementById("page-buttons")
-//    btn.innerHTML = null;
+}
 
-//    let start = 1;
-
-//    if(pageNo > 4){
-//        start = pageNo - 1;
-//    }
-
-//    for(let i= start; i<=start+9; i++){
-//        let b = document.createElement('button');
-//    b.innerText = i;
-//    b.onclick = () => {
-//        renderDom(i-1);
-//    };
-//    btn.append(b);
-//    }
-//   };
 
