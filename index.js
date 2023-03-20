@@ -5,7 +5,7 @@ let url =  "https://geektrust.s3-ap-southeast-1.amazonaws.com/adminui-problem/me
 
 
 
-var currentPageNum = 0;
+let currentPageNum = 0;
 
 
   let data = [];
@@ -21,6 +21,7 @@ let main = async () => {
 
    renderDom(currentPageNum)
    dataLength(data.length);
+   searchFunctionality(data);
   }
 
   main();
@@ -98,4 +99,25 @@ container.append(tr);
 
 }
 
+const searchInput = document.querySelector('#search');
+
+let searchFunctionality = (data) => {
+searchInput.addEventListener('input', function () {
+  const searchTerm = searchInput.value;
+
+  console.log("searchterm: ", searchTerm);
+
+console.log(data);
+
+let filteredResult = data.filter( () => {
+  if(data.name == searchTerm){
+return true;
+  }
+  return false;
+})
+
+console.log("ad ", filteredResult);
+
+})
+}
 

@@ -60,11 +60,11 @@ tbody td:last-child span:last-child {
 <body>
 
     <header>
-        <input type="text" placeholder="Seach by name, email, or role">
+        <input type="text" placeholder="Seach by name, email, or role" id="search">
     </header>
 
     <main>
-        <table>
+        <table id="table">
             <thead>
               <tr>
                 <th><input type="checkbox" id="selectAll"></th>
@@ -165,3 +165,31 @@ tbody td:last-child span:last-child {
 </html>
 
 <script src="./index.js"></script>
+<!-- <script>
+
+  console.log(1212);
+const table = document.querySelector('#table');
+const tableRows = table.querySelectorAll('tbody tr');
+
+
+
+  tableRows.forEach((row) => {
+    const name = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
+    const email = row.querySelector('td:nth-child(3)').textContent.toLowerCase();
+    const role = row.querySelector('td:nth-child(4)').textContent.toLowerCase();
+
+    console.log(name, email, role);
+
+    if (
+      name.includes(searchTerm) ||
+      email.includes(searchTerm) ||
+      role.includes(searchTerm)
+    ) {
+      row.style.display = '';
+    } else {
+      row.style.display = 'none';
+    }
+  });
+});
+
+</script> -->
