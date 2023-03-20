@@ -116,7 +116,7 @@ searchInput.addEventListener('input', function () {
   const searchTerm = searchInput.value;
   console.log("searchterm: ", searchTerm);
   
-  let filteredResult = data.filter((ele) => {
+  data.filter((ele) => {
     // console.log(data[0].name);
     if (ele.name.includes(searchTerm) || ele.email.includes(searchTerm) || ele.role.includes(searchTerm)) {
       return true;
@@ -125,10 +125,12 @@ searchInput.addEventListener('input', function () {
   })
   
 
-  console.log("ad ", filteredResult);
-
-//   filteredResult.forEach(({ name, email, role }) => {
-
+//   console.log("ad ", filteredResult);
+//   document.getElementById("container").innerHTML = null;
+//   filteredResult.forEach(({ name, email, role }, id) => {
+//       console.log(12121212);
+// console.log(name);
+//       console.log(id, "i")
 //     let tr = document.createElement("tr");
 //     tr.innerHTML = `
 //           <td><input type="checkbox"></td>
@@ -146,3 +148,50 @@ searchInput.addEventListener('input', function () {
 })
 }
 
+////////////////////////////////////delete
+
+
+//delete department by id
+
+
+document.querySelector("#deleteDepart").addEventListener("submit",async(e)=>{
+  
+      let id = document.getElementById('dId').value;
+  
+      // console.log(id);
+  
+      let res = await fetch(url, {
+  
+          method: 'DELETE',
+  
+          headers: {
+              'Content-Type': "application/json",
+          }
+      })
+  
+      let data = await res.json();
+       console.log('data:', data)
+  
+       if(data.message == "Delete Successfully"){
+           visiblePOP();
+           popText.innerHTML=`<br>
+           <img id="wrong_psd_gif" src="https://i.gifer.com/7efs.gif" alt="">
+           <p style="display: block;">${data.message}</p>
+           
+           <br>`
+  
+       }else{
+  
+          visiblePOP();
+          popText.innerHTML=`<br>
+          <img id="wrong_psd_gif" src="https://media.tenor.com/B1ySTFIj8fcAAAAi/error.gif" alt="">
+          <p style="display: block;">${data.message}</p>
+          
+          <br>`
+  
+       }
+  
+       document.getElementById("deleteDepart").reset();
+  
+  
+  })

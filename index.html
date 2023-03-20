@@ -8,19 +8,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
 <link rel="stylesheet" href="./index.css">
-
-
 </head>
 <style>
-
 </style>
-
 <body>
-
     <header>
-        <input type="text" placeholder="Seach by name, email, or role" id="search">
+      <input type="text" placeholder="Seach by name, email, or role" id="search">
     </header>
-
     <main>
         <table id="table">
             <thead>
@@ -34,29 +28,20 @@
             </thead>
             <tbody id="container"></tbody>
           </table>
-          
     </main>
-
     <footer>
-
       <div id="deleteSelect">
         <button onclick="deleteAllSelect()" style="background-color: #dc3545;" class="pagination-btn">Delete All</button>
       </div>
-
             <div class="pagination">
                 <button id="first-button" class="pagination-btn first-page-btn" >First</button>
                 <button class="pagination-btn prev-page-btn" id="previous-button">Previous</button>
                 <span class="pagination-page-numbers" id="page-buttons"></span>
                 <button id="next-button" class="pagination-btn next-page-btn">Next Page</button>
-                <button id="last-button" class="pagination-btn last-page-btn" >Last Page</button>
-              </div>          
-
+              <button id="last-button" class="pagination-btn last-page-btn" >Last Page</button> </div>
     </footer>
-    
 </body>
-
 <style>
 </style>
 </html>
-
 <script src="./index.js"></script>
