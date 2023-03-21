@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <table>
+        <thead>
+          <tr>
+            <th><input type="checkbox"></th>
+            <th>Column 1</th>
+            <th>Column 2</th>
+            <th>Column 3</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><input type="checkbox"></td>
+            <td>Row 1, Column 1</td>
+            <td>Row 1, Column 2</td>
+            <td>Row 1, Column 3</td>
+            <td><button class="delete">Delete</button></td>
+          </tr>
+          <!-- more rows... -->
+        </tbody>
+      </table>
+      
+      <div>
+        <button id="delete-selected">Delete Selected</button>
+      </div>
+      
+      <script>
+      const checkboxes = Array.from(document.querySelectorAll('tbody input[type="checkbox"]'));
+      checkboxes.forEach(function(checkbox) {
+        checkbox.addEventListener('click', function() {
+          const row = checkbox.closest('tr');
+          row.classList.toggle('selected', checkbox.checked);
+        });
+      });
+      
+      const deleteSelectedButton = document.querySelector('#delete-selected');
+      deleteSelectedButton.addEventListener('click', function() {
+        const selectedRows = Array.from(document.querySelectorAll('tbody tr.selected'));
+        selectedRows.forEach(function(row) {
+          row.remove();
+        });
+      });
+      </script>
+      
+    
+</body>
+</html>

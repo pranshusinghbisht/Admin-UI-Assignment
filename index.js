@@ -38,7 +38,7 @@ let renderDom = (index) => {
   let per_page_data = data.slice(start, end);
   // dataLength = data.length;
 
-  per_page_data.forEach(({ name, email, role }) => {
+  per_page_data.forEach(({ name, email, role }, id) => {
 
     let tr = document.createElement("tr");
     tr.innerHTML = `
@@ -47,8 +47,8 @@ let renderDom = (index) => {
           <td>${email}</td>
           <td>${role}</td>
           <td>
-            <span><i class="fas fa-edit"></i></span>
-            <span><i class="fas fa-trash-alt"></i></span>
+             <span onclick="editData(${id})"><i class="fas fa-edit"></i></span>
+             <span onclick="deleteData(${id})" class="delete"><i class="fas fa-trash-alt"></i></span>
           </td>
 `
     container.append(tr);
@@ -111,12 +111,14 @@ let searchFunctionality = (data) => {
 
   console.log(data);
 
-  const searchInput = document.querySelector('#search');
+  let searchInput = document.querySelector('#search');
 searchInput.addEventListener('input', function () {
   const searchTerm = searchInput.value;
   console.log("searchterm: ", searchTerm);
+
+  console.log("data",data);
   
-  data.filter((ele) => {
+  let filteredResult = data.filter((ele) => {
     // console.log(data[0].name);
     if (ele.name.includes(searchTerm) || ele.email.includes(searchTerm) || ele.role.includes(searchTerm)) {
       return true;
@@ -125,42 +127,37 @@ searchInput.addEventListener('input', function () {
   })
   
 
-//   console.log("ad ", filteredResult);
-//   document.getElementById("container").innerHTML = null;
-//   filteredResult.forEach(({ name, email, role }, id) => {
-//       console.log(12121212);
+  // console.log("ad ", data);
+   document.getElementById("container").innerHTML = null;
+  filteredResult.forEach(({ name, email, role }, id) => {
+      // console.log(12121212);
 // console.log(name);
-//       console.log(id, "i")
-//     let tr = document.createElement("tr");
-//     tr.innerHTML = `
-//           <td><input type="checkbox"></td>
-//           <td>${name}</td>
-//           <td>${email}</td>
-//           <td>${role}</td>
-//           <td>
-//             <span><i class="fas fa-edit"></i></span>
-//             <span><i class="fas fa-trash-alt"></i></span>
-//           </td>
-// `
-//     container.append(tr);
-//   });
+      console.log("index", id)
+    let tr = document.createElement("tr");
+    tr.setAttribute('data-id', id+1);
+    tr.innerHTML = `
+          <td><input type="checkbox"></td>
+          <td>${name}</td>
+          <td>${email}</td>
+          <td>${role}</td>
+          <td>
+            <span onclick="editData(${id})"><i class="fas fa-edit"></i></span>
+            <span onclick="deleteData(${id})" class="delete"><i class="fas fa-trash-alt"></i></span>
+          </td>
+`
+    container.append(tr);
+  });
 
 })
 }
 
-////////////////////////////////////delete
+/////////////////////////////////Delete Functionailty////////////////////////////////////
 
 
-//delete department by id
 
+let  deleteData = async(id) => {
 
-document.querySelector("#deleteDepart").addEventListener("submit",async(e)=>{
-  
-      let id = document.getElementById('dId').value;
-  
-      // console.log(id);
-  
-      let res = await fetch(url, {
+      let res = await fetch(`${url}`, {
   
           method: 'DELETE',
   
@@ -171,27 +168,47 @@ document.querySelector("#deleteDepart").addEventListener("submit",async(e)=>{
   
       let data = await res.json();
        console.log('data:', data)
+
   
-       if(data.message == "Delete Successfully"){
-           visiblePOP();
-           popText.innerHTML=`<br>
-           <img id="wrong_psd_gif" src="https://i.gifer.com/7efs.gif" alt="">
-           <p style="display: block;">${data.message}</p>
-           
-           <br>`
-  
-       }else{
-  
-          visiblePOP();
-          popText.innerHTML=`<br>
-          <img id="wrong_psd_gif" src="https://media.tenor.com/B1ySTFIj8fcAAAAi/error.gif" alt="">
-          <p style="display: block;">${data.message}</p>
-          
-          <br>`
-  
-       }
-  
-       document.getElementById("deleteDepart").reset();
+//        document.getElementById("deleteDepart").reset();
   
   
-  })
+//   })
+}
+///////////////////////////////Edit Functionailty////////////////////////////////////////
+
+let editData = (id) => {
+  console.log("editId",id);
+}
+
+
+///////////////////////////////select All/////////////////////////////////////////////////////
+
+const selectAllCheckbox = document.getElementById('selectAll');
+selectAllCheckbox.addEventListener('click', function() {
+  // Code to select or deselect all rows
+  const checkboxes = Array.from(document.querySelectorAll('tbody input[type="checkbox"]'));
+
+  checkboxes.forEach(function(checkbox) {
+    checkbox.checked = selectAllCheckbox.checked;
+  });
+  
+});
+
+////////////////////////////delete selected////////////////////
+const checkboxes = Array.from(document.querySelectorAll('tbody input[type="checkbox"]'));
+checkboxes.forEach(function(checkbox) {
+  checkbox.addEventListener('click', function() {
+    const row = checkbox.closest('tr');
+    row.classList.toggle('selected', checkbox.checked);
+  });
+});
+
+const deleteSelectedButton = document.querySelector('#delete-selected');
+deleteSelectedButton.addEventListener('click', function() {
+  const selectedRows = Array.from(document.querySelectorAll('tbody tr.selected'));
+  selectedRows.forEach(function(row) {
+    row.remove();
+  });
+});
+
