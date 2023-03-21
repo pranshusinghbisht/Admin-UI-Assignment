@@ -1,14 +1,9 @@
 const url = "https://geektrust.s3-ap-southeast-1.amazonaws.com/adminui-problem/members.json";
 
-
 ////////////////////////////////////////////////////
 ////////////////Pagination//////////////////////////
 
-
-
 let currentPageNum = 0;
-
-
 let data = [];
 
 let getData = async () => {
@@ -57,7 +52,9 @@ let renderDom = (index) => {
 };
 
 let dataLength = (totalData) => {
+
   //next page
+
   document.getElementById("next-button").addEventListener("click", () => {
 
 
@@ -71,6 +68,7 @@ let dataLength = (totalData) => {
   })
 
   //previous page
+
   document.getElementById("previous-button").addEventListener("click", () => {
 
     if (currentPageNum == 0) {
@@ -84,12 +82,14 @@ let dataLength = (totalData) => {
   })
 
   //first page
+
   document.getElementById("first-button").addEventListener("click", () => {
     currentPageNum = 0;
     renderDom(currentPageNum);
   })
 
   //last page
+
   document.getElementById("last-button").addEventListener("click", () => {
     currentPageNum = Math.ceil(totalData / 10) - 1;
     renderDom(currentPageNum);
@@ -107,18 +107,22 @@ let searchFunctionality = (data) => {
   searchInput.addEventListener('input', function () {
     const searchTerm = searchInput.value;
 
-    let filteredResult = data.filter((ele) => {
-      if (ele.name.includes(searchTerm) || ele.email.includes(searchTerm) || ele.role.includes(searchTerm)) {
-        return true;
-      }
-      return false;
-    })
+    if (searchTerm == "") {
+      renderDom(currentPageNum);
+    } else {
 
-    document.getElementById("container").innerHTML = null;
-    filteredResult.forEach(({ name, email, role }, id) => {
-      let tr = document.createElement("tr");
-      tr.setAttribute('data-id', id + 1);
-      tr.innerHTML = `
+      let filteredResult = data.filter((ele) => {
+        if (ele.name.includes(searchTerm) || ele.email.includes(searchTerm) || ele.role.includes(searchTerm)) {
+          return true;
+        }
+        return false;
+      })
+
+      document.getElementById("container").innerHTML = null;
+      filteredResult.forEach(({ name, email, role }, id) => {
+        let tr = document.createElement("tr");
+        tr.setAttribute('data-id', id + 1);
+        tr.innerHTML = `
           <td><input type="checkbox" name="selected[]"></td>
           <td>${name}</td>
           <td>${email}</td>
@@ -128,14 +132,12 @@ let searchFunctionality = (data) => {
             <span onclick="deleteData(this)" class="delete"><i class="fas fa-trash-alt"></i></span>
           </td>
 `
-      container.append(tr);
-    });
+        container.append(tr);
+      });
 
+    }
   })
 }
-
-
-
 
 ///////////////////////////////select All/////////////////////////////////////////////////////
 const selectAllCheckbox = document.getElementById('selectAll');
@@ -148,7 +150,6 @@ selectAllCheckbox.addEventListener('click', function () {
   });
 
 });
-
 
 /////////////////////////////////Delete Functionailty////////////////////////////////////
 ///////////////////////////////////delete selected///////////////////////////////////////
@@ -166,13 +167,10 @@ function deleteRows() {
 
 ///////////////////////delete row//////////////////////
 
-
-
 let deleteData = (btn) => {
   let row = btn.parentNode.parentNode;
   row.parentNode.removeChild(row);
 }
-
 
 
 ///////////////////////////////Edit Functionailty////////////////////////////////////////
