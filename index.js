@@ -48,7 +48,7 @@ let renderDom = (index) => {
           <td>${email}</td>
           <td>${role}</td>
           <td>
-             <span onclick="editData(${id}]]])"><i class="fas fa-edit"></i></span>
+             <span onclick="editData(this)"><i class="fas fa-edit"></i></span>
              <span onclick="deleteData(this)" class="delete"><i class="fas fa-trash-alt"></i></span>
           </td>
 `
@@ -139,7 +139,7 @@ searchInput.addEventListener('input', function () {
           <td>${email}</td>
           <td>${role}</td>
           <td>
-            <span onclick="editData(${id})"><i class="fas fa-edit"></i></span>
+            <span onclick="editData(this)"><i class="fas fa-edit"></i></span>
             <span onclick="deleteData(this)" class="delete"><i class="fas fa-trash-alt"></i></span>
           </td>
 `
@@ -185,14 +185,39 @@ function deleteRows() {
 
 
 let deleteData = (btn) => {
-  var row = btn.parentNode.parentNode; // Get the row
-  row.parentNode.removeChild(row); // Delete the row
+  var row = btn.parentNode.parentNode;
+  row.parentNode.removeChild(row);
 }
 
 
 
 ///////////////////////////////Edit Functionailty////////////////////////////////////////
 
-let editData = (id) => {
-  console.log("editId",id);
+let editData = (btn) => {
+  var row = btn.parentNode.parentNode;
+  var cells = row.getElementsByTagName("td");
+  
+  for (var i = 1; i < cells.length - 1; i++) {
+    var cell = cells[i];
+    var value = cell.innerHTML; 
+    cell.innerHTML = '<input type="text" value="' + value + '">';
+  }
+  
+  btn.innerHTML = "Save";
+  btn.onclick = function() { saveRow(this); };
+}
+
+function saveRow(btn) {
+  var row = btn.parentNode.parentNode;
+  var cells = row.getElementsByTagName("td");
+  
+  for (var i = 0; i < cells.length - 1; i++) {
+    var cell = cells[i];
+    var input = cell.getElementsByTagName("input")[0];
+    var value = input.value;
+    cell.innerHTML = value;
+  }
+  
+  btn.innerHTML = `<span onclick="editData(this)"><i class="fas fa-edit"></i></span>`;
+  btn.onclick = function() { editRow(this); };
 }
