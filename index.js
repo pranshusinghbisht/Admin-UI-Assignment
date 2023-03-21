@@ -1,4 +1,5 @@
-let url = "https://geektrust.s3-ap-southeast-1.amazonaws.com/adminui-problem/members.json";
+const url = "https://geektrust.s3-ap-southeast-1.amazonaws.com/adminui-problem/members.json";
+
 
 ////////////////////////////////////////////////////
 ////////////////Pagination//////////////////////////
@@ -42,13 +43,13 @@ let renderDom = (index) => {
 
     let tr = document.createElement("tr");
     tr.innerHTML = `
-          <td><input type="checkbox"></td>
+          <td><input type="checkbox" name="selected[]"></td>
           <td>${name}</td>
           <td>${email}</td>
           <td>${role}</td>
           <td>
-             <span onclick="editData(${id})"><i class="fas fa-edit"></i></span>
-             <span onclick="deleteData(${id})" class="delete"><i class="fas fa-trash-alt"></i></span>
+             <span onclick="editData(${id}]]])"><i class="fas fa-edit"></i></span>
+             <span onclick="deleteData(this)" class="delete"><i class="fas fa-trash-alt"></i></span>
           </td>
 `
     container.append(tr);
@@ -103,9 +104,6 @@ let dataLength = (totalData) => {
 ////////////////////////////////////////////////////////////////////////
 //////////////////search functionailty//////////////////////////////////
 
-
-
-
 let searchFunctionality = (data) => {
 
 
@@ -136,13 +134,13 @@ searchInput.addEventListener('input', function () {
     let tr = document.createElement("tr");
     tr.setAttribute('data-id', id+1);
     tr.innerHTML = `
-          <td><input type="checkbox"></td>
+          <td><input type="checkbox" name="selected[]"></td>
           <td>${name}</td>
           <td>${email}</td>
           <td>${role}</td>
           <td>
             <span onclick="editData(${id})"><i class="fas fa-edit"></i></span>
-            <span onclick="deleteData(${id})" class="delete"><i class="fas fa-trash-alt"></i></span>
+            <span onclick="deleteData(this)" class="delete"><i class="fas fa-trash-alt"></i></span>
           </td>
 `
     container.append(tr);
@@ -151,39 +149,10 @@ searchInput.addEventListener('input', function () {
 })
 }
 
-/////////////////////////////////Delete Functionailty////////////////////////////////////
 
-
-
-let  deleteData = async(id) => {
-
-      let res = await fetch(`${url}`, {
-  
-          method: 'DELETE',
-  
-          headers: {
-              'Content-Type': "application/json",
-          }
-      })
-  
-      let data = await res.json();
-       console.log('data:', data)
-
-  
-//        document.getElementById("deleteDepart").reset();
-  
-  
-//   })
-}
-///////////////////////////////Edit Functionailty////////////////////////////////////////
-
-let editData = (id) => {
-  console.log("editId",id);
-}
 
 
 ///////////////////////////////select All/////////////////////////////////////////////////////
-
 const selectAllCheckbox = document.getElementById('selectAll');
 selectAllCheckbox.addEventListener('click', function() {
   // Code to select or deselect all rows
@@ -195,20 +164,35 @@ selectAllCheckbox.addEventListener('click', function() {
   
 });
 
+
+/////////////////////////////////Delete Functionailty////////////////////////////////////
+
+
 ////////////////////////////delete selected////////////////////
-const checkboxes = Array.from(document.querySelectorAll('tbody input[type="checkbox"]'));
-checkboxes.forEach(function(checkbox) {
-  checkbox.addEventListener('click', function() {
-    const row = checkbox.closest('tr');
-    row.classList.toggle('selected', checkbox.checked);
-  });
-});
+function deleteRows() {
+  let table = document.getElementById("myTable");
+  let checkboxes = document.getElementsByName("selected[]");
+  for (let i = 0; i < checkboxes.length; i++) {
+    if (checkboxes[i].checked) {
+      table.deleteRow(i+1);
+      i--;
+    }
+  }
+}
 
-const deleteSelectedButton = document.querySelector('#delete-selected');
-deleteSelectedButton.addEventListener('click', function() {
-  const selectedRows = Array.from(document.querySelectorAll('tbody tr.selected'));
-  selectedRows.forEach(function(row) {
-    row.remove();
-  });
-});
+///////////////////////delete row//////////////////////
 
+
+
+let deleteData = (btn) => {
+  var row = btn.parentNode.parentNode; // Get the row
+  row.parentNode.removeChild(row); // Delete the row
+}
+
+
+
+///////////////////////////////Edit Functionailty////////////////////////////////////////
+
+let editData = (id) => {
+  console.log("editId",id);
+}

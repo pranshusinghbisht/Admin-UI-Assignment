@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Delete Rows</title>
+	<script>
+		function deleteRows() {
+			// Get a reference to the table and the checkboxes
+			var table = document.getElementById("myTable");
+			var checkboxes = document.getElementsByName("selected[]");
+
+			// Loop through all the checkboxes
+			for (var i = 0; i < checkboxes.length; i++) {
+				// If the checkbox is checked, remove the corresponding row
+				if (checkboxes[i].checked) {
+					table.deleteRow(i+1);
+					i--;
+				}
+			}
+		}
+	</script>
+</head>
+<body>
+	<table id="myTable">
+		<tr>
+			<th>Select</th>
+			<th>Name</th>
+			<th>Email</th>
+		</tr>
+		<tr>
+			<td><input type="checkbox" name="selected[]"></td>
+			<td>John Doe</td>
+			<td>john.doe@example.com</td>
+		</tr>
+		<tr>
+			<td><input type="checkbox" name="selected[]"></td>
+			<td>Jane Doe</td>
+			<td>jane.doe@example.com</td>
+		</tr>
+		<tr>
+			<td><input type="checkbox" name="selected[]"></td>
+			<td>Bob Smith</td>
+			<td>bob.smith@example.com</td>
+		</tr>
+	</table>
+	<br>
+	<button onclick="deleteRows()">Delete Selected Rows</button>
+</body>
+</html>
