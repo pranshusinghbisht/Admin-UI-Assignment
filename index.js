@@ -37,7 +37,6 @@ let renderDom = (index) => {
   let end = start + 10;
 
   let per_page_data = data.slice(start, end);
-  // dataLength = data.length;
 
   per_page_data.forEach(({ name, email, role }, id) => {
 
@@ -58,7 +57,6 @@ let renderDom = (index) => {
 };
 
 let dataLength = (totalData) => {
-  console.log(Math.ceil(totalData / 10));
   //next page
   document.getElementById("next-button").addEventListener("click", () => {
 
@@ -68,7 +66,6 @@ let dataLength = (totalData) => {
       renderDom(currentPageNum);
     } else {
       currentPageNum++;
-      console.log(currentPageNum);
       renderDom(currentPageNum);
     }
   })
@@ -106,34 +103,22 @@ let dataLength = (totalData) => {
 
 let searchFunctionality = (data) => {
 
-
-  console.log(data);
-
   let searchInput = document.querySelector('#search');
-searchInput.addEventListener('input', function () {
-  const searchTerm = searchInput.value;
-  console.log("searchterm: ", searchTerm);
+  searchInput.addEventListener('input', function () {
+    const searchTerm = searchInput.value;
 
-  console.log("data",data);
-  
-  let filteredResult = data.filter((ele) => {
-    // console.log(data[0].name);
-    if (ele.name.includes(searchTerm) || ele.email.includes(searchTerm) || ele.role.includes(searchTerm)) {
-      return true;
-    }
-    return false;
-  })
-  
+    let filteredResult = data.filter((ele) => {
+      if (ele.name.includes(searchTerm) || ele.email.includes(searchTerm) || ele.role.includes(searchTerm)) {
+        return true;
+      }
+      return false;
+    })
 
-  // console.log("ad ", data);
-   document.getElementById("container").innerHTML = null;
-  filteredResult.forEach(({ name, email, role }, id) => {
-      // console.log(12121212);
-// console.log(name);
-      console.log("index", id)
-    let tr = document.createElement("tr");
-    tr.setAttribute('data-id', id+1);
-    tr.innerHTML = `
+    document.getElementById("container").innerHTML = null;
+    filteredResult.forEach(({ name, email, role }, id) => {
+      let tr = document.createElement("tr");
+      tr.setAttribute('data-id', id + 1);
+      tr.innerHTML = `
           <td><input type="checkbox" name="selected[]"></td>
           <td>${name}</td>
           <td>${email}</td>
@@ -143,10 +128,10 @@ searchInput.addEventListener('input', function () {
             <span onclick="deleteData(this)" class="delete"><i class="fas fa-trash-alt"></i></span>
           </td>
 `
-    container.append(tr);
-  });
+      container.append(tr);
+    });
 
-})
+  })
 }
 
 
@@ -154,27 +139,26 @@ searchInput.addEventListener('input', function () {
 
 ///////////////////////////////select All/////////////////////////////////////////////////////
 const selectAllCheckbox = document.getElementById('selectAll');
-selectAllCheckbox.addEventListener('click', function() {
+selectAllCheckbox.addEventListener('click', function () {
   // Code to select or deselect all rows
   const checkboxes = Array.from(document.querySelectorAll('tbody input[type="checkbox"]'));
 
-  checkboxes.forEach(function(checkbox) {
+  checkboxes.forEach(function (checkbox) {
     checkbox.checked = selectAllCheckbox.checked;
   });
-  
+
 });
 
 
 /////////////////////////////////Delete Functionailty////////////////////////////////////
+///////////////////////////////////delete selected///////////////////////////////////////
 
-
-////////////////////////////delete selected////////////////////
 function deleteRows() {
   let table = document.getElementById("myTable");
   let checkboxes = document.getElementsByName("selected[]");
   for (let i = 0; i < checkboxes.length; i++) {
     if (checkboxes[i].checked) {
-      table.deleteRow(i+1);
+      table.deleteRow(i + 1);
       i--;
     }
   }
@@ -185,7 +169,7 @@ function deleteRows() {
 
 
 let deleteData = (btn) => {
-  var row = btn.parentNode.parentNode;
+  let row = btn.parentNode.parentNode;
   row.parentNode.removeChild(row);
 }
 
@@ -194,30 +178,30 @@ let deleteData = (btn) => {
 ///////////////////////////////Edit Functionailty////////////////////////////////////////
 
 let editData = (btn) => {
-  var row = btn.parentNode.parentNode;
-  var cells = row.getElementsByTagName("td");
-  
-  for (var i = 1; i < cells.length - 1; i++) {
-    var cell = cells[i];
-    var value = cell.innerHTML; 
+  let row = btn.parentNode.parentNode;
+  let cells = row.getElementsByTagName("td");
+
+  for (let i = 1; i < cells.length - 1; i++) {
+    let cell = cells[i];
+    let value = cell.innerHTML;
     cell.innerHTML = '<input type="text" value="' + value + '">';
   }
-  
-  btn.innerHTML = "Save";
-  btn.onclick = function() { saveRow(this); };
+
+  btn.innerHTML = "save";
+  btn.onclick = function () { saveRow(this); };
 }
 
 function saveRow(btn) {
-  var row = btn.parentNode.parentNode;
-  var cells = row.getElementsByTagName("td");
-  
-  for (var i = 0; i < cells.length - 1; i++) {
-    var cell = cells[i];
-    var input = cell.getElementsByTagName("input")[0];
-    var value = input.value;
+  let row = btn.parentNode.parentNode;
+  let cells = row.getElementsByTagName("td");
+
+  for (let i = 0; i < cells.length - 1; i++) {
+    let cell = cells[i];
+    let input = cell.getElementsByTagName("input")[0];
+    let value = input.value;
     cell.innerHTML = value;
   }
-  
+
   btn.innerHTML = `<span onclick="editData(this)"><i class="fas fa-edit"></i></span>`;
-  btn.onclick = function() { editRow(this); };
+  btn.onclick = function () { editRow(this); };
 }

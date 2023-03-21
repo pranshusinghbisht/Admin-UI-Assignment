@@ -99,12 +99,7 @@ table {
   }
 
 
-/* Footer CSS */
-
-footer{
-    display: flex;
-    justify-content: center;
-}
+/* Footer */
 
 #deleteSelect{
     display: block;
